@@ -9,11 +9,13 @@ Query Douban and IMDb ratings, cast, genre, and other metadata via the PtGen API
 
 ## Script Location
 
+All paths below are relative to this skill's base directory (provided by the agent harness at load time).
+
 ```
-~/.agents/skills/ptgen/scripts/ptgen.py
+scripts/ptgen.py
 ```
 
-Run with: `python3 ~/.agents/skills/ptgen/scripts/ptgen.py`
+Run with: `python3 <skill_base_dir>/scripts/ptgen.py`
 
 ## Usage
 
@@ -21,30 +23,30 @@ Run with: `python3 ~/.agents/skills/ptgen/scripts/ptgen.py`
 
 ```bash
 # Single
-python3 ~/.agents/skills/ptgen/scripts/ptgen.py --douban 1291546
+python3 scripts/ptgen.py --douban 1291546
 
 # Batch
-python3 ~/.agents/skills/ptgen/scripts/ptgen.py --douban 1291546 1302425 1393859
+python3 scripts/ptgen.py --douban 1291546 1302425 1393859
 ```
 
 ### By IMDb ID
 
 ```bash
 # Single
-python3 ~/.agents/skills/ptgen/scripts/ptgen.py --imdb tt0108052
+python3 scripts/ptgen.py --imdb tt0108052
 
 # Batch
-python3 ~/.agents/skills/ptgen/scripts/ptgen.py --imdb tt0108052 tt32897959
+python3 scripts/ptgen.py --imdb tt0108052 tt32897959
 ```
 
 ### Output Formats
 
 ```bash
 # Table (default) — human and agent readable
-python3 ~/.agents/skills/ptgen/scripts/ptgen.py --douban 1291546
+python3 scripts/ptgen.py --douban 1291546
 
 # JSON — for piping or programmatic use
-python3 ~/.agents/skills/ptgen/scripts/ptgen.py --douban 1291546 --json
+python3 scripts/ptgen.py --douban 1291546 --json
 ```
 
 ## Returned Fields
@@ -84,13 +86,13 @@ python3 ~/.agents/skills/ptgen/scripts/ptgen.py --douban 1291546 --json
 
 ```bash
 # Check if something is a movie or TV show
-python3 ~/.agents/skills/ptgen/scripts/ptgen.py --douban 36963690 --json | python3 -c "import sys,json;d=json.load(sys.stdin);print(d[0]['type'])"
+python3 scripts/ptgen.py --douban 36963690 --json | python3 -c "import sys,json;d=json.load(sys.stdin);print(d[0]['type'])"
 
 # Get just the Douban rating
-python3 ~/.agents/skills/ptgen/scripts/ptgen.py --douban 36963690 --json | python3 -c "import sys,json;d=json.load(sys.stdin);print(d[0]['douban_rating'])"
+python3 scripts/ptgen.py --douban 36963690 --json | python3 -c "import sys,json;d=json.load(sys.stdin);print(d[0]['douban_rating'])"
 
 # Batch lookup and filter high-rated movies
-python3 ~/.agents/skills/ptgen/scripts/ptgen.py --douban 1291546 1302425 1393859 --json | python3 -c "
+python3 scripts/ptgen.py --douban 1291546 1302425 1393859 --json | python3 -c "
 import sys,json
 for r in json.load(sys.stdin):
     if r.get('douban_rating') and r['douban_rating'] >= 8.0:
